@@ -27,8 +27,8 @@ def buttoncallback():
 
         ##### testing 
 
-        brain_handle.texttospeechfn()
-        brain_handle.outputfile()
+        #brain_handle.texttospeechfn()
+        #brain_handle.outputfile()
         st.session_state.Original_text = brain_handle.originaltext
         st.session_state.English_text = brain_handle.translatedtext
 
