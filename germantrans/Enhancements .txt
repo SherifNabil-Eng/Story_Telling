@@ -1,0 +1,6 @@
+Enhancements 
+
+output to a text file
+Next , do the web part
+Upload a PDF and split the PDF
+Do the code with a new version of Langchain code 
