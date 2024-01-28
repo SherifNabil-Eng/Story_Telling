@@ -32,10 +32,15 @@ class Transtext ():
 
     def __init__(self, API_KEY,openai_api_version,RESOURCE_ENDPOINT,llm_model,imgtext):
         self.API_KEY = API_KEY
+        print ("API key is ,",self.API_KEY)
         self.openai_api_version = openai_api_version
+        print ("openai_api_version is ,",self.openai_api_version)
         self.RESOURCE_ENDPOINT = RESOURCE_ENDPOINT
+        print ("RESOURCE_ENDPOINT is ,",self.RESOURCE_ENDPOINT)
         self.llm_model = llm_model
+        print ("llm_model is ,",self.llm_model)
         self.imgtext = imgtext
+        print ("imgtext is ,",self.imgtext)
         self.output_parser = StructuredOutputParser.from_response_schemas(self.response_schemas)
         self.format_instructions = self.output_parser.get_format_instructions()
 

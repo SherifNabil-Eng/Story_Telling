@@ -13,6 +13,7 @@ class Imagetotext():
 
         #encoded_image = base64.b64encode(open(self.IMAGE_PATH, 'rb').read()).decode('ascii')
         encoded_image = base64.b64encode(self.IMAGE).decode('ascii')
+        print ("got the image")
         headers = { 
             "Content-Type": "application/json",
             "api-key": self.GPT4V_KEY,
@@ -49,8 +50,10 @@ class Imagetotext():
             "max_tokens": 800
         }
         try:
+            print ("inside try of the imagetotextfn")
             response = requests.post(self.GPT4V_ENDPOINT, headers=headers, json=payload)
             response.raise_for_status()  # Will raise an HTTPError if the HTTP request returned an unsuccessful status code
+            print ("response is \n",response.json())
         except requests.RequestException as e:
             raise SystemExit(f"Failed to make the request. Error: {e}")
         return ( response.json()["choices"][0]['message']['content'])

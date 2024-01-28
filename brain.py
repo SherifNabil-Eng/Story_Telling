@@ -28,7 +28,9 @@ class Brain:
             
         load_dotenv()
         self.GPT4V_ENDPOINT = os.getenv("GPT4V_ENDPOINT","").strip()
+        print ("GPT4V_ENDPOINT is ",self.GPT4V_ENDPOINT)
         self.GPT4V_KEY = os.getenv("GPT4V_KEY","").strip()
+        print ("GPT4V_KEY is ",self.GPT4V_KEY)
 
         # Configuration
         #self.IMAGE_PATH = "Page1.jpg"
@@ -59,18 +61,25 @@ class Brain:
 
     def setenvtexttospeech (self):
         load_dotenv()
-        self.subscription = os.getenv("SPEECH_KEY","").strip()
+        self.subscription_original = os.getenv("SPEECH_KEY_Original","").strip()
+        self.subscription_translated = os.getenv("SPEECH_KEY_Translated","").strip()
         self.SPEECH_REGION = os.getenv("SPEECH_REGION","").strip()
-        assert self.subscription, "ERROR: Azure Speech subscription key is missing"
+        self.SPEECH_ENDPOINT_ID = os.getenv("SPEECH_ENDPOINT_ID","").strip()
+        assert self.subscription_original, "ERROR: Azure Speech subscription original key is missing"
+        assert self.subscription_translated, "ERROR: Azure Speech subscription translated key is missing"
         assert self.SPEECH_REGION, "ERROR: Azure Speech region is missing"
+        assert self.SPEECH_ENDPOINT_ID, "ERROR: Azure Speech endpoint id is missing"
         return 
 
 # initialize the class with the environment variables
     def __init__(self,IMAGE):
 
         self.IMAGE = IMAGE
+        print ( "inside init for the brain class")
         self.setenvvartranstext()
+        print ("after setenvvartranstext")
         self.setenvvarimgtotext()
+        print ("after setenvvarimgtotext")
         self.setenvtexttospeech()
     
         return
@@ -79,9 +88,20 @@ class Brain:
     def getimgtext(self):
         
         #GPT4V_ENDPOINT,GPT4V_KEY,IMAGE_PATH = setenvvarimgtotext ()
-        img_text = Imagetotext(self.GPT4V_ENDPOINT,self.GPT4V_KEY,self.IMAGE)
+        #img_text = Imagetotext(self.GPT4V_ENDPOINT,self.GPT4V_KEY,self.IMAGE)
+        img_text = '''
+         Na, so was, was macht der Felix denn da? \
+
+        Er fliegt -hui-in seinem Ballon rund um die Welt.\
+        Da gibt es so viel zu sehen; große Städte und Dörfer, Berge, Felder und Wälder.\
+        Im Fluss hat Felix ein Schiff entdeckt.\
+
+        Wo will er denn als Nächstes hin?\
+        Na, das steht in Felix' Brief drin.     
+        '''
         print ("inside getimgtext")
-        self.originaltext = img_text.imagetotextfn()
+        #self.originaltext = img_text.imagetotextfn()
+        self.originaltext = img_text
         print ("original text is \n",self.originaltext)
         return 
 
@@ -114,12 +134,13 @@ class Brain:
     def texttospeechfn(self):
         #
         #subscription,SPEECH_REGION = setenvtexttospeech ()
-        self.texttospeech = Texttospeech(self.subscription,self.SPEECH_REGION)
+        self.texttospeech = Texttospeech(self.subscription_original,self.subscription_translated,self.SPEECH_REGION,self.SPEECH_ENDPOINT_ID)
         #original text voice 
-        self.texttospeech.text_to_speech(self.originaltext, voice='de-DE-KatjaNeural')
+        self.texttospeech.text_to_speech(self.originaltext, voice='de-DE-KatjaNeural',translated_flag=False)
 
-        #translated text voice
-        self.texttospeech.text_to_speech(self.translatedtext, voice='en-US-RyanMultilingualNeural')
+        #translated text voice 
+        #en-US-RyanMultilingualNeural
+        self.texttospeech.text_to_speech(self.translatedtext, voice='Sherif_EnglishNeural',translated_flag=True)
         return
 
 # out put to a text file
