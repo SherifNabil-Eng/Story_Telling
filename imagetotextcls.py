@@ -13,6 +13,7 @@ class Imagetotext():
 
         #encoded_image = base64.b64encode(open(self.IMAGE_PATH, 'rb').read()).decode('ascii')
         encoded_image = base64.b64encode(self.IMAGE).decode('ascii')
+        print (self.GPT4V_ENDPOINT ,self.GPT4V_KEY)
         print ("got the image")
         headers = { 
             "Content-Type": "application/json",

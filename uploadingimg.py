@@ -15,15 +15,15 @@ def buttoncallback():
         st.session_state.English_text = "Please upload an image !"
     else:
         brain_handle = br.Brain(IMAGE)
-        print ("brain_handle is ",brain_handle)
+        #print ("brain_handle is ",brain_handle)
         brain_handle.getimgtext()
-        print ("after brain_handle")
+        #print ("after brain_handle")
  
 
         brain_handle.gettranslatedtext()
        # testing the getimgtext function
         imgtext =brain_handle.originallanguage
-        print ("original text is ",imgtext)
+        #print ("original text is ",imgtext)
 
         ##### testing 
 

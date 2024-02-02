@@ -28,9 +28,9 @@ class Brain:
             
         load_dotenv()
         self.GPT4V_ENDPOINT = os.getenv("GPT4V_ENDPOINT","").strip()
-        print ("GPT4V_ENDPOINT is ",self.GPT4V_ENDPOINT)
+        #print ("GPT4V_ENDPOINT is ",self.GPT4V_ENDPOINT)
         self.GPT4V_KEY = os.getenv("GPT4V_KEY","").strip()
-        print ("GPT4V_KEY is ",self.GPT4V_KEY)
+        #print ("GPT4V_KEY is ",self.GPT4V_KEY)
 
         # Configuration
         #self.IMAGE_PATH = "Page1.jpg"
@@ -75,11 +75,11 @@ class Brain:
     def __init__(self,IMAGE):
 
         self.IMAGE = IMAGE
-        print ( "inside init for the brain class")
+        #print ( "inside init for the brain class")
         self.setenvvartranstext()
-        print ("after setenvvartranstext")
+        #print ("after setenvvartranstext")
         self.setenvvarimgtotext()
-        print ("after setenvvarimgtotext")
+        #print ("after setenvvarimgtotext")
         self.setenvtexttospeech()
     
         return
@@ -88,21 +88,21 @@ class Brain:
     def getimgtext(self):
         
         #GPT4V_ENDPOINT,GPT4V_KEY,IMAGE_PATH = setenvvarimgtotext ()
-        #img_text = Imagetotext(self.GPT4V_ENDPOINT,self.GPT4V_KEY,self.IMAGE)
-        img_text = '''
-         Na, so was, was macht der Felix denn da? \
+        img_text = Imagetotext(self.GPT4V_ENDPOINT,self.GPT4V_KEY,self.IMAGE)
+        #img_text = '''
+        # Na, so was, was macht der Felix denn da? \
 
-        Er fliegt -hui-in seinem Ballon rund um die Welt.\
-        Da gibt es so viel zu sehen; große Städte und Dörfer, Berge, Felder und Wälder.\
-        Im Fluss hat Felix ein Schiff entdeckt.\
+        #Er fliegt -hui-in seinem Ballon rund um die Welt.\
+        #Da gibt es so viel zu sehen; große Städte und Dörfer, Berge, Felder und Wälder.\
+        #Im Fluss hat Felix ein Schiff entdeckt.\
 
-        Wo will er denn als Nächstes hin?\
-        Na, das steht in Felix' Brief drin.     
-        '''
-        print ("inside getimgtext")
-        #self.originaltext = img_text.imagetotextfn()
-        self.originaltext = img_text
-        print ("original text is \n",self.originaltext)
+        #Wo will er denn als Nächstes hin?\
+        #Na, das steht in Felix' Brief drin.     
+        #'''
+        #print ("inside getimgtext")
+        self.originaltext = img_text.imagetotextfn()
+        #self.originaltext = img_text
+        #print ("original text is \n",self.originaltext)
         return 
 
 # translate the text and get the translated text and the original language    
@@ -115,7 +115,7 @@ class Brain:
         #            Wo soll sie denn jetzt hin? Da kommt Sarah. Sie kann Lise alles zeigen. Das wird ein aufregender Tag!"""
         transtext = Transtext(self.API_KEY,self.openai_api_version,self.RESOURCE_ENDPOINT,self.llm_model,self.originaltext)
         self.originallanguage , self.translatedtext = transtext.getresponse()
-        print ("oiginal language is {} and translated text is \n {}".format (self.originallanguage , self.translatedtext))
+        #print ("oiginal language is {} and translated text is \n {}".format (self.originallanguage , self.translatedtext))
         return 
 
     # detect the language and translate
@@ -135,12 +135,16 @@ class Brain:
         #
         #subscription,SPEECH_REGION = setenvtexttospeech ()
         self.texttospeech = Texttospeech(self.subscription_original,self.subscription_translated,self.SPEECH_REGION,self.SPEECH_ENDPOINT_ID)
-        #original text voice 
-        self.texttospeech.text_to_speech(self.originaltext, voice='de-DE-KatjaNeural',translated_flag=False)
+        #original text voice
+        print ("original language is ",self.originallanguage)
+        if self.originallanguage == "German":
+            self.texttospeech.text_to_speech(self.originaltext,voice='de-DE-KatjaNeural',translated_flag=False)
+        elif self.originallanguage == "Italian":
+            self.texttospeech.text_to_speech(self.originaltext,voice='it-IT-ElsaNeural',translated_flag=False)
 
         #translated text voice 
         #en-US-RyanMultilingualNeural
-        self.texttospeech.text_to_speech(self.translatedtext, voice='Sherif_EnglishNeural',translated_flag=True)
+        self.texttospeech.text_to_speech(self.translatedtext,voice='Sherif_EnglishNeural',translated_flag=True)
         return
 
 # out put to a text file

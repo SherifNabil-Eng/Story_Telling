@@ -1,0 +1,12 @@
+OPENAI_API_VERSION=2023-07-01-preview
+OPENAI_API_KEY=e53797971aca4975943fe6214d510d8d
+OPENAI_API_BASE=https://shopenaisweden.openai.azure.com/
+OPENAI_COMPLETIONS_MODEL=gpt-35-turbo-instruct
+OPENAI_CHAT_MODEL=gpt-4-32k
+OPENAI_EMBEDDING_MODEL=text-embedding-ada-002
+SPEECH_KEY_Original = 66d214d2625d49e1810a12460550383b
+SPEECH_KEY_Translated = 8e746d7f33a84ee29bbe62a4e64a38a8
+SPEECH_ENDPOINT_ID = 9c35d910-cdd9-4894-9fe3-d13f10031ddc
+SPEECH_REGION = eastus
+GPT4V_KEY = "d561d9927e014a25ab279a24504207dd"
+GPT4V_ENDPOINT = "https://gpt4v-australia-east.openai.azure.com/openai/deployments/gpt-4/chat/completions?api-version=2023-07-01-preview"
